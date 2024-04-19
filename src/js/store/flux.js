@@ -19,6 +19,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
+			getCharacters: async () => {
+				try {
+					const charactersResp = await fetch ("https://www.swapi.tech/api/people")
+					const charactersData = await charactersResp.json();
+					setStore({characters: charactersData.results});
+				} catch (error) {
+					console.log("error fetching characters", error);
+				}
+				
+			},
+			getOneCharacter: async (id) => {
+				try {
+					const charactersResp = await fetch ("https://www.swapi.tech/api/people/"+id)
+					const charactersData = await charactersResp.json();
+					setStore({singleCharacter: charactersData.result});
+				} catch (error) {
+					console.log("error fetching characters", error);
+				}
+				
+			},
+			
 			loadSomeData: () => {
 				/**
 					fetch().then().then(data => setStore({ "foo": data.bar }))
