@@ -11,16 +11,6 @@ export const Single = () => {
         actions.getOneCharacter(theid);
     }, []);
 
-    // Define keyMapping for the properties to be displayed
-    const keyMapping = {
-		birth_year: "Birth Year",
-        gender: "Gender",
-        height: "Height",
-        skin_color: "Skin Color",
-        hair_color: "Hair Color",
-        eye_color: "Eye Color",
-    };
-
     console.log(theid);
     return (
         <div className="container">
@@ -43,14 +33,30 @@ export const Single = () => {
             <hr />
             {/* Properties */}
             <div className="d-flex flex-wrap">
-                {Object.entries(store.singleCharacter?.properties || {})
-                    .filter(([key]) => keyMapping.hasOwnProperty(key))
-                    .map(([key, value]) => (
-                        <div key={key} className="flex-grow-1 col-md-2">
-                            <div>{keyMapping[key]}</div>
-                            <div>{value}</div>
-                        </div>
-                    ))}
+                <div className="flex-grow-1 col-md-2">
+                    <div>Birth Year</div>
+                    <div>{store.singleCharacter?.properties?.birth_year}</div>
+                </div>
+                <div className="flex-grow-1 col-md-2">
+                    <div>Gender</div>
+                    <div>{store.singleCharacter?.properties?.gender}</div>
+                </div>
+                <div className="flex-grow-1 col-md-2">
+                    <div>Height</div>
+                    <div>{store.singleCharacter?.properties?.height}</div>
+                </div>
+                <div className="flex-grow-1 col-md-2">
+                    <div>Skin Color</div>
+                    <div>{store.singleCharacter?.properties?.skin_color}</div>
+                </div>
+                <div className="flex-grow-1 col-md-2">
+                    <div>Hair Color</div>
+                    <div>{store.singleCharacter?.properties?.hair_color}</div>
+                </div>
+                <div className="flex-grow-1 col-md-2">
+                    <div>Eye Color</div>
+                    <div>{store.singleCharacter?.properties?.eye_color}</div>
+                </div>
             </div>
         </div>
     );

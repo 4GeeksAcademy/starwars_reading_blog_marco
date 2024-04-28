@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-
 export const Planet = () => {
     const { store, actions } = useContext(Context);
     const { theid } = useParams();
@@ -12,21 +11,15 @@ export const Planet = () => {
         actions.getOnePlanet(theid);
     }, []);
 
-    const keyMapping = {
-        diameter: "Diameter",
-        rotation_period: "Rotation Period",
-        orbital_period: "Orbital Period",
-        gravity: "Gravity",
-        population: "Population",
-        climate: "Climate"
-    };
-
+    console.log(theid);
     return (
         <div className="container">
             <div className="card d-flex flex-column flex-md-row">
+                {/* Image on the left */}
                 <div className="col-md-4">
                     <img src={`https://starwars-visualguide.com/assets/img/planets/${theid}.jpg`} className="img-fluid" alt="Planet" />
                 </div>
+                {/* Title and lorem ipsum on the right */}
                 <div className="col-md-8">
                     <div className="card-body">
                         <h1 className="card-title">{store.singlePlanet?.properties?.name}</h1>
@@ -36,16 +29,34 @@ export const Planet = () => {
                     </div>
                 </div>
             </div>
+            {/* Line break */}
             <hr />
+            {/* Properties */}
             <div className="d-flex flex-wrap">
-                {Object.entries(store.singlePlanet?.properties || {})
-                    .filter(([key]) => keyMapping.hasOwnProperty(key))
-                    .map(([key, value]) => (
-                        <div key={key} className="flex-grow-1 col-md-2">
-                            <div>{keyMapping[key]}</div>
-                            <div>{value}</div>
-                        </div>
-                    ))}
+                <div className="flex-grow-1 col-md-2">
+                    <div>Diameter</div>
+                    <div>{store.singlePlanet?.properties?.diameter}</div>
+                </div>
+                <div className="flex-grow-1 col-md-2">
+                    <div>Rotation Period</div>
+                    <div>{store.singlePlanet?.properties?.rotation_period}</div>
+                </div>
+                <div className="flex-grow-1 col-md-2">
+                    <div>Orbital Period</div>
+                    <div>{store.singlePlanet?.properties?.orbital_period}</div>
+                </div>
+                <div className="flex-grow-1 col-md-2">
+                    <div>Gravity</div>
+                    <div>{store.singlePlanet?.properties?.gravity}</div>
+                </div>
+                <div className="flex-grow-1 col-md-2">
+                    <div>Population</div>
+                    <div>{store.singlePlanet?.properties?.population}</div>
+                </div>
+                <div className="flex-grow-1 col-md-2">
+                    <div>Climate</div>
+                    <div>{store.singlePlanet?.properties?.climate}</div>
+                </div>
             </div>
         </div>
     );

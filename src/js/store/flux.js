@@ -18,14 +18,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 			// Use getActions to call a function within a fuction
 			addToFavorites: (character) => {
-                const store = getStore();
-                setStore({ faveList: [...store.faveList, character] });
-            },
-			removeFromFavorites: (id) => {
-                const store = getStore();
-                const updatedFaveList = store.faveList.filter(character => character.id !== id);
-                setStore({ faveList: updatedFaveList });
-            },
+				const store = getStore();
+				const faveList = store.faveList || []; // If store.faveList is undefined or null, default to an empty array
+				
+				// Check if the character already exists in the favorites list
+				const isCharacterInFavorites = faveList.some((favCharacter) => favCharacter.uid === character.uid);
+			
+				if (!isCharacterInFavorites) {
+					// If the character is not already in the favorites list, add it
+					setStore({ faveList: [...faveList, character] });
+				} else {
+					// If the character is already in the favorites list, you may want to show a message or handle it differently
+					console.log('Character is already in favorites list');
+				}
+			},
+			removeFromFavorites: (uid) => {
+				const store = getStore();
+				
+				// Log store before updating faveList
+				console.log('Store before update:', store);
+				
+				const updatedFaveList = store.faveList.filter(character => character.uid !== uid);
+				
+				// Log updated favorite list before setting it in the store
+				console.log('Updated favorite list:', updatedFaveList);
+				
+				setStore({ faveList: updatedFaveList });
+				
+				// Log store after updating faveList
+				console.log('Store after update:', getStore());
+			},
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
