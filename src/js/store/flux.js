@@ -12,10 +12,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			faveList: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
+			addToFavorites: (character) => {
+                const store = getStore();
+                setStore({ faveList: [...store.faveList, character] });
+            },
+			removeFromFavorites: (id) => {
+                const store = getStore();
+                const updatedFaveList = store.faveList.filter(character => character.id !== id);
+                setStore({ faveList: updatedFaveList });
+            },
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
@@ -39,7 +49,45 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				
 			},
+			getPlanets: async () => {
+				try {
+					const planetsResp = await fetch("https://www.swapi.tech/api/planets");
+					const planetsData = await planetsResp.json();
+					setStore({ planets: planetsData.results });
+				} catch (error) {
+					console.log("Error fetching planets", error);
+				}
+			},
 			
+			getOnePlanet: async (id) => {
+				try {
+					const planetResp = await fetch(`https://www.swapi.tech/api/planets/${id}`);
+					const planetData = await planetResp.json();
+					setStore({ singlePlanet: planetData.result });
+				} catch (error) {
+					console.log("Error fetching planet", error);
+				}
+			},
+			
+			getStarships: async () => {
+				try {
+					const starshipsResp = await fetch("https://www.swapi.tech/api/starships");
+					const starshipsData = await starshipsResp.json();
+					setStore({ starships: starshipsData.results });
+				} catch (error) {
+					console.log("Error fetching starships", error);
+				}
+			},
+			
+			getOneStarship: async (id) => {
+				try {
+					const starshipResp = await fetch(`https://www.swapi.tech/api/starships/${id}`);
+					const starshipData = await starshipResp.json();
+					setStore({ singleStarship: starshipData.result });
+				} catch (error) {
+					console.log("Error fetching starship", error);
+				}
+			},			
 			loadSomeData: () => {
 				/**
 					fetch().then().then(data => setStore({ "foo": data.bar }))
