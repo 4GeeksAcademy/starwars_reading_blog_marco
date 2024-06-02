@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-export const Single = () => {
+export const Character = () => {
     const { store, actions } = useContext(Context);
     const { theid } = useParams();
 
@@ -62,6 +62,6 @@ export const Single = () => {
     );
 };
 
-Single.propTypes = {
+Character.propTypes = {
     match: PropTypes.object
 };
